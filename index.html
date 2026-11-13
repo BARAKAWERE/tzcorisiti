@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TZCO Receipts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap">
+<link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="top">
+    <h1>Receipts</h1>
+    <p>TZCO Printing &amp; Design</p>
+  </div>
+
+  <div class="panel" id="form">
+    <p class="note" id="sampleNote">Sample data is loaded so you can see the layout. Select "New receipt" to start a real one.</p>
+
+    <section class="group">
+      <h2>Customer and date</h2>
+      <div class="row">
+        <div class="f"><label for="no">Receipt number</label><input id="no" autocomplete="off"></div>
+        <div class="f"><label for="date">Date</label><input id="date" type="date"></div>
+      </div>
+      <div class="row">
+        <div class="f"><label for="cust">Customer name</label><input id="cust" placeholder="Customer name" autocomplete="off"></div>
+        <div class="f"><label for="custPhone">Customer phone (optional)</label><input id="custPhone" inputmode="tel" placeholder="07xx xxx xxx" autocomplete="off"></div>
+      </div>
+    </section>
+
+    <section class="group">
+      <h2>Products and services</h2>
+      <div id="items" class="group"></div>
+      <datalist id="prodList"></datalist>
+      <div class="btns"><button type="button" class="btn" id="addItem">+ Add product</button></div>
+    </section>
+
+    <section class="group">
+      <h2>Payment</h2>
+      <div class="row">
+        <div class="f"><label for="disc">Discount (TSh)</label><input id="disc" inputmode="numeric" value="0"></div>
+        <div class="f"><label for="paid">Amount paid (TSh)</label><input id="paid" inputmode="numeric"></div>
+      </div>
+      <div class="row">
+        <div class="f"><label for="method">Payment method</label>
+          <select id="method">
+            <option>Cash</option><option>M-Pesa</option><option>Tigo Pesa</option>
+            <option>Airtel Money</option><option>HaloPesa</option><option>Bank transfer</option><option>Other</option>
+          </select>
+        </div>
+        <div class="f"><label for="ref">Transaction reference (optional)</label><input id="ref" autocomplete="off"></div>
+      </div>
+      <div class="row">
+        <div class="f"><label for="by">Received by (optional)</label><input id="by" autocomplete="off"></div>
+      </div>
+      <div class="f"><label for="note">Note on receipt (optional)</label><textarea id="note" placeholder="e.g. Balance due on delivery"></textarea></div>
+    </section>
+
+    <section class="group">
+      <details>
+        <summary>Business details</summary>
+        <div class="group">
+          <div class="f"><label for="bName">Business name</label><input id="bName" autocomplete="off"></div>
+          <div class="row">
+            <div class="f"><label for="bLoc">Location</label><input id="bLoc" autocomplete="off"></div>
+            <div class="f"><label for="bPhone">Business phone</label><input id="bPhone" inputmode="tel" placeholder="Add your number" autocomplete="off"></div>
+          </div>
+          <div class="f"><label for="bWeb">Website</label><input id="bWeb" autocomplete="off"></div>
+        </div>
+      </details>
+    </section>
+  </div>
+
+  <div class="preview-col" style="display:grid;gap:14px;min-width:0">
+    <article class="receipt" aria-label="Receipt preview">
+      <div class="r-bar"></div>
+      <div class="wm" id="wm"></div>
+      <div class="r-in">
+        <div class="r-top">
+          <img id="rLogo" class="r-logo" src="images/logo.png" alt="TZCO Printing &amp; Design">
+          <div class="r-id"><h2>RECEIPT</h2><p>No. <b id="rNo"></b></p><p id="rDate"></p></div>
+        </div>
+        <p class="r-contact" id="rContact"></p>
+        <div id="rBody" style="display:grid;gap:14px"></div>
+      </div>
+    </article>
+    <div class="btns">
+      <button type="button" class="btn primary" id="pdf">Save as PDF</button>
+      <a class="btn wa" id="wa" href="https://wa.me/" target="_blank" rel="noopener">Send on WhatsApp</a>
+      <button type="button" class="btn" id="copy">Copy text</button>
+    </div>
+    <div class="btns">
+      <button type="button" class="btn" id="save">Save record</button>
+      <button type="button" class="btn" id="fresh">New receipt</button>
+    </div>
+    <p class="status" id="status" role="status" aria-live="polite"></p>
+    <textarea id="fallback" readonly aria-label="Receipt text"></textarea>
+    <p class="note" id="pdfNote">Save as PDF downloads the receipt or opens your phone's share menu, where you can pick WhatsApp to send the PDF itself. "Send on WhatsApp" sends the receipt as a text message.</p>
+  </div>
+
+  <div class="panel" style="grid-column:1 / -1">
+    <section class="group">
+      <h2>Saved receipts</h2>
+      <div class="hist" id="hist"></div>
+    </section>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="script/script.js"></script>
+</body>
+</html>
